@@ -4,28 +4,40 @@ class Program
 {
     static void Main()
     {
-        Console.Write("Введите целое положительное число: ");
-        int number = int.Parse(Console.ReadLine());
+        while (true)
+        {
+            Console.Write("Введите целое положительное число (или 'exit' для выхода): ");
+            string input = Console.ReadLine();
 
-        Console.WriteLine($"Все возможные слагаемые числа {number}:");
+            if (input.ToLower() == "exit")
+            {
+                Console.WriteLine("Программа завершила выполнение.");
+                break;
+            }
 
-        FindCombinations(number, "");
+            if (int.TryParse(input, out int number))
+            {
+                Console.WriteLine($"Все возможные слагаемые числа {number}:");
+                FindCombinations(number, "");
+            }
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, введите целое число или 'exit' для выхода.");
+            }
+        }
     }
 
     static void FindCombinations(int target, string currentCombination)
     {
-        // цикл для перебора всех возможных слагаемых от 1 до таргет
         if (target == 0)
         {
-            
             Console.WriteLine(currentCombination.TrimEnd('+'));
             return;
         }
-        // удаляется последний символ и выводится в виде суммы как комбинация
+
         for (int i = 1; i <= target; i++)
         {
             FindCombinations(target - i, currentCombination + i + "+");
         }
     }
 }
-// а вообще я битмейкер
